@@ -24,12 +24,12 @@ def get_data():
 def check_alerts(df):
     def check(row):
         if row['heart_rate'] < 60 or row['heart_rate'] > 100:
-            return "⚠ Need Attention"
+            return " Need Attention"
         if row['oxygen_level'] < 95:
-            return "⚠ Need Attention"
+            return " Need Attention"
         if row['temperature'] < 36.5 or row['temperature'] > 37.5:
-            return "⚠ Need Attention"
-        return "✅ Normal"
+            return " Need Attention"
+        return " Normal"
     df["Alert"] = df.apply(check, axis=1)
     return df
 
@@ -44,8 +44,8 @@ def highlight_abnormal(val, col):
     return ""
 
 # Streamlit app
-st.set_page_config(page_title="🏥 Patient Monitoring Dashboard", layout="wide")
-st.title("🏥 Real-Time Patient Monitoring")
+st.set_page_config(page_title=" Patient Monitoring Dashboard", layout="wide")
+st.title(" Real-Time Patient Monitoring")
 
 # Auto-refresh every 5 sec
 st_autorefresh(interval=5000, key="refresh")
@@ -63,17 +63,17 @@ styled_table = latest.style.applymap(
     lambda v: highlight_abnormal(v, "temperature"), subset=["temperature"]
 )
 
-st.subheader("📋 Latest Vitals")
+st.subheader(" Latest Vitals")
 st.dataframe(styled_table, use_container_width=True)
 
 # Patient trend charts
-st.subheader("📊 Patient Trends")
+st.subheader(" Patient Trends")
 
 patients = df["name"].unique()
 
 # Use session_state to remember last choice
 if "selected_patient" not in st.session_state:
-    st.session_state.selected_patient = patients[0]  # default
+    st.session_state.selected_patient = patients[0]
 
 selected = st.selectbox(
     "Select Patient",
